@@ -1,0 +1,137 @@
+{
+  "timestamp": "2026-06-12T16:04:14.422Z",
+  "hostname": "pt4j98",
+  "platform": "linux",
+  "nodeVersion": "v20.12.0",
+  "files": {
+    "BRAINSTORM.md": {
+      "size": 1489,
+      "modified": "2026-06-11T20:37:05.527Z",
+      "hash": "3a4edc57"
+    },
+    "CAPABILITIES.md": {
+      "size": 4366,
+      "modified": "2026-06-12T16:03:56.303Z",
+      "hash": "74c45fa6"
+    },
+    "README.md": {
+      "size": 4971,
+      "modified": "2026-06-11T22:53:53.976Z",
+      "hash": "3ab4cffe"
+    },
+    "home-server/Dockerfile": {
+      "size": 419,
+      "modified": "2026-06-11T22:54:27.672Z",
+      "hash": "2d1f998a"
+    },
+    "home-server/README.md": {
+      "size": 1752,
+      "modified": "2026-06-11T22:56:31.631Z",
+      "hash": "1bd4f727"
+    },
+    "home-server/cloudflare.service": {
+      "size": 330,
+      "modified": "2026-06-11T22:54:27.672Z",
+      "hash": "7f0167ee"
+    },
+    "home-server/setup.sh": {
+      "size": 13964,
+      "modified": "2026-06-11T22:54:27.660Z",
+      "hash": "13e63a72"
+    },
+    "home-server/start-daily.sh": {
+      "size": 4156,
+      "modified": "2026-06-12T15:33:39.549Z",
+      "hash": "7bd935be"
+    },
+    "home-server/start-tunnel.sh": {
+      "size": 1101,
+      "modified": "2026-06-11T22:56:42.575Z",
+      "hash": "17535d75"
+    },
+    "index.js": {
+      "size": 34,
+      "modified": "2026-05-28T06:40:58.271Z",
+      "hash": "51e6d045"
+    },
+    "library-beacon/README.md": {
+      "size": 1228,
+      "modified": "2026-06-11T22:56:31.635Z",
+      "hash": "1f9698bd"
+    },
+    "library-beacon/beacon.ps1": {
+      "size": 12297,
+      "modified": "2026-06-11T22:54:59.461Z",
+      "hash": "4311b6c6"
+    },
+    "library-beacon/ssh-tunnel.ps1": {
+      "size": 2096,
+      "modified": "2026-06-11T22:54:59.469Z",
+      "hash": "2770d9c8"
+    },
+    "multi-env/README.md": {
+      "size": 3410,
+      "modified": "2026-06-11T22:56:31.623Z",
+      "hash": "4264b5e5"
+    },
+    "package.json": {
+      "size": 573,
+      "modified": "2026-06-11T23:09:11.028Z",
+      "hash": "7a8688db"
+    },
+    "scripts/bootstrap.sh": {
+      "size": 4394,
+      "modified": "2026-06-11T23:01:35.433Z",
+      "hash": "4c72dc20"
+    },
+    "scripts/load-memory.sh": {
+      "size": 2190,
+      "modified": "2026-06-11T23:01:31.056Z",
+      "hash": "2fe3a61c"
+    },
+    "scripts/restore.sh": {
+      "size": 2553,
+      "modified": "2026-06-11T22:56:00.954Z",
+      "hash": "3c3f5bd6"
+    },
+    "send_command.py": {
+      "size": 871,
+      "modified": "2026-06-12T15:49:41.215Z",
+      "hash": "20a1aa22"
+    },
+    "session-persistence/README.md": {
+      "size": 1101,
+      "modified": "2026-06-11T22:56:31.635Z",
+      "hash": "acd8037"
+    },
+    "session-persistence/sync.js": {
+      "size": 9777,
+      "modified": "2026-06-11T22:58:37.973Z",
+      "hash": "405668c3"
+    },
+    "web-terminal/package.json": {
+      "size": 358,
+      "modified": "2026-06-11T22:58:14.449Z",
+      "hash": "34df79b7"
+    },
+    "web-terminal/public/index.html": {
+      "size": 10399,
+      "modified": "2026-06-11T23:16:35.525Z",
+      "hash": "bd0d766"
+    },
+    "web-terminal/server.js": {
+      "size": 19819,
+      "modified": "2026-06-12T00:02:45.241Z",
+      "hash": "522fa207"
+    },
+    "yarn.lock": {
+      "size": 37561,
+      "modified": "2026-06-11T23:09:11.096Z",
+      "hash": "1f9cf97e"
+    }
+  },
+  "env": {},
+  "gitStatus": "?? .test_cmd.txt\n?? CAPABILITIES.md\n?? home-server/start-daily.sh\n?? send_command.py\n",
+  "gitBranch": "main",
+  "gitCommit": "5262182d3ffe369cd64b66d5c7a7e84382dc9668"
+}
