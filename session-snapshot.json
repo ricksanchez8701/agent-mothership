@@ -1,137 +1,402 @@
 {
-  "timestamp": "2026-06-12T16:04:14.422Z",
+  "timestamp": "2026-06-16T16:50:45.120Z",
   "hostname": "pt4j98",
   "platform": "linux",
   "nodeVersion": "v20.12.0",
   "files": {
-    "BRAINSTORM.md": {
-      "size": 1489,
-      "modified": "2026-06-11T20:37:05.527Z",
-      "hash": "3a4edc57"
-    },
     "CAPABILITIES.md": {
-      "size": 4366,
-      "modified": "2026-06-12T16:03:56.303Z",
-      "hash": "74c45fa6"
+      "size": 5700,
+      "modified": "2026-06-15T14:27:44.280Z",
+      "hash": "78ce9a5a"
+    },
+    "CONTEXT.md": {
+      "size": 2835,
+      "modified": "2026-06-16T14:50:25.133Z",
+      "hash": "79632c"
+    },
+    "PROGRESS.md": {
+      "size": 19085,
+      "modified": "2026-06-16T16:50:41.254Z",
+      "hash": "72c68621"
     },
     "README.md": {
       "size": 4971,
-      "modified": "2026-06-11T22:53:53.976Z",
+      "modified": "2026-06-12T16:04:15.355Z",
       "hash": "3ab4cffe"
+    },
+    "RESEARCH.md": {
+      "size": 14283,
+      "modified": "2026-06-15T14:27:00.112Z",
+      "hash": "18f4d7a"
+    },
+    "SESSION_SUMMARY.md": {
+      "size": 3160,
+      "modified": "2026-06-16T00:22:37.798Z",
+      "hash": "61e49d71"
+    },
+    "WORKSPACE.md": {
+      "size": 898,
+      "modified": "2026-06-15T14:27:00.112Z",
+      "hash": "649840e0"
     },
     "home-server/Dockerfile": {
       "size": 419,
-      "modified": "2026-06-11T22:54:27.672Z",
+      "modified": "2026-06-12T16:04:15.355Z",
       "hash": "2d1f998a"
     },
     "home-server/README.md": {
       "size": 1752,
-      "modified": "2026-06-11T22:56:31.631Z",
+      "modified": "2026-06-12T16:04:15.355Z",
       "hash": "1bd4f727"
     },
     "home-server/cloudflare.service": {
       "size": 330,
-      "modified": "2026-06-11T22:54:27.672Z",
+      "modified": "2026-06-12T16:04:15.355Z",
       "hash": "7f0167ee"
     },
     "home-server/setup.sh": {
       "size": 13964,
-      "modified": "2026-06-11T22:54:27.660Z",
+      "modified": "2026-06-12T16:04:15.355Z",
       "hash": "13e63a72"
     },
     "home-server/start-daily.sh": {
       "size": 4156,
-      "modified": "2026-06-12T15:33:39.549Z",
+      "modified": "2026-06-15T14:27:44.280Z",
       "hash": "7bd935be"
     },
     "home-server/start-tunnel.sh": {
       "size": 1101,
-      "modified": "2026-06-11T22:56:42.575Z",
+      "modified": "2026-06-12T16:04:15.355Z",
       "hash": "17535d75"
     },
-    "index.js": {
-      "size": 34,
-      "modified": "2026-05-28T06:40:58.271Z",
-      "hash": "51e6d045"
-    },
-    "library-beacon/README.md": {
-      "size": 1228,
-      "modified": "2026-06-11T22:56:31.635Z",
-      "hash": "1f9698bd"
-    },
-    "library-beacon/beacon.ps1": {
-      "size": 12297,
-      "modified": "2026-06-11T22:54:59.461Z",
-      "hash": "4311b6c6"
-    },
-    "library-beacon/ssh-tunnel.ps1": {
-      "size": 2096,
-      "modified": "2026-06-11T22:54:59.469Z",
-      "hash": "2770d9c8"
-    },
-    "multi-env/README.md": {
-      "size": 3410,
-      "modified": "2026-06-11T22:56:31.623Z",
-      "hash": "4264b5e5"
-    },
     "package.json": {
-      "size": 573,
-      "modified": "2026-06-11T23:09:11.028Z",
-      "hash": "7a8688db"
-    },
-    "scripts/bootstrap.sh": {
-      "size": 4394,
-      "modified": "2026-06-11T23:01:35.433Z",
-      "hash": "4c72dc20"
+      "size": 611,
+      "modified": "2026-06-15T14:27:44.284Z",
+      "hash": "58026546"
     },
     "scripts/load-memory.sh": {
       "size": 2190,
-      "modified": "2026-06-11T23:01:31.056Z",
+      "modified": "2026-06-15T14:27:04.656Z",
       "hash": "2fe3a61c"
-    },
-    "scripts/restore.sh": {
-      "size": 2553,
-      "modified": "2026-06-11T22:56:00.954Z",
-      "hash": "3c3f5bd6"
-    },
-    "send_command.py": {
-      "size": 871,
-      "modified": "2026-06-12T15:49:41.215Z",
-      "hash": "20a1aa22"
     },
     "session-persistence/README.md": {
       "size": 1101,
-      "modified": "2026-06-11T22:56:31.635Z",
+      "modified": "2026-06-12T16:04:15.359Z",
       "hash": "acd8037"
     },
     "session-persistence/sync.js": {
       "size": 9777,
-      "modified": "2026-06-11T22:58:37.973Z",
+      "modified": "2026-06-12T16:04:15.359Z",
       "hash": "405668c3"
+    },
+    "web-terminal/beacon_persist.py": {
+      "size": 4093,
+      "modified": "2026-06-16T15:39:46.777Z",
+      "hash": "11a86355"
     },
     "web-terminal/package.json": {
       "size": 358,
-      "modified": "2026-06-11T22:58:14.449Z",
+      "modified": "2026-06-12T16:04:15.359Z",
       "hash": "34df79b7"
     },
+    "web-terminal/public/BRIEFING_NATIVE_TERMINAL.md": {
+      "size": 4758,
+      "modified": "2026-06-15T17:56:31.023Z",
+      "hash": "7714627d"
+    },
+    "web-terminal/public/GUIDE_SCHTASKS_NATIVE_BEACON.md": {
+      "size": 4523,
+      "modified": "2026-06-15T23:28:31.435Z",
+      "hash": "2160a7e3"
+    },
+    "web-terminal/public/SESSION_BRIEFING.md": {
+      "size": 1493,
+      "modified": "2026-06-15T22:11:33.414Z",
+      "hash": "1d62477a"
+    },
+    "web-terminal/public/beacon-vbs-connect.txt": {
+      "size": 1448,
+      "modified": "2026-06-15T21:43:57.608Z",
+      "hash": "3df983ae"
+    },
+    "web-terminal/public/beacon_persist.py": {
+      "size": 9183,
+      "modified": "2026-06-16T15:41:49.083Z",
+      "hash": "1c99b81f"
+    },
+    "web-terminal/public/connect-schtasks.hta": {
+      "size": 3546,
+      "modified": "2026-06-15T22:01:16.887Z",
+      "hash": "a6f7656"
+    },
+    "web-terminal/public/connect.bat": {
+      "size": 141,
+      "modified": "2026-06-15T21:49:46.426Z",
+      "hash": "399cb95"
+    },
+    "web-terminal/public/connect.hta": {
+      "size": 802,
+      "modified": "2026-06-15T21:55:42.169Z",
+      "hash": "75a4f66"
+    },
+    "web-terminal/public/connect.vbs": {
+      "size": 527,
+      "modified": "2026-06-15T21:49:46.422Z",
+      "hash": "2e837640"
+    },
+    "web-terminal/public/craft_store1.ps1": {
+      "size": 1735,
+      "modified": "2026-06-16T16:45:58.748Z",
+      "hash": "24a4fb5c"
+    },
+    "web-terminal/public/craft_store2.ps1": {
+      "size": 1938,
+      "modified": "2026-06-16T16:46:25.633Z",
+      "hash": "5847e4a0"
+    },
+    "web-terminal/public/freebuff-windows.tar.gz": {
+      "size": 51977171,
+      "modified": "2026-06-15T14:27:03.092Z",
+      "hash": "53e23bb7"
+    },
+    "web-terminal/public/frp-freedom.zip": {
+      "size": 802375,
+      "modified": "2026-06-15T14:27:03.208Z",
+      "hash": "3497764a"
+    },
+    "web-terminal/public/grok-report.txt": {
+      "size": 6752,
+      "modified": "2026-06-16T16:31:37.772Z",
+      "hash": "568f8db"
+    },
     "web-terminal/public/index.html": {
-      "size": 10399,
-      "modified": "2026-06-11T23:16:35.525Z",
-      "hash": "bd0d766"
+      "size": 11773,
+      "modified": "2026-06-15T14:27:03.208Z",
+      "hash": "4a95d90e"
+    },
+    "web-terminal/public/mtkclient.zip": {
+      "size": 8299723,
+      "modified": "2026-06-15T14:27:03.384Z",
+      "hash": "3485a34f"
+    },
+    "web-terminal/public/odin.zip": {
+      "size": 4509458,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "2c07558c"
+    },
+    "web-terminal/public/research-notes.md": {
+      "size": 8352,
+      "modified": "2026-06-16T15:57:31.384Z",
+      "hash": "34d1bcc8"
+    },
+    "web-terminal/public/scripts/Whats-Possible.ps1": {
+      "size": 10415,
+      "modified": "2026-06-15T17:54:52.521Z",
+      "hash": "39bcc72e"
+    },
+    "web-terminal/public/scripts/capability-test.ps1": {
+      "size": 142,
+      "modified": "2026-06-15T23:32:19.599Z",
+      "hash": "7f03caf5"
+    },
+    "web-terminal/public/scripts/check-fb-window.ps1": {
+      "size": 1254,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "13c42523"
+    },
+    "web-terminal/public/scripts/check-freebuff-window.ps1": {
+      "size": 1828,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "3b005391"
+    },
+    "web-terminal/public/scripts/check-pf.ps1": {
+      "size": 3244,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "755be4f4"
+    },
+    "web-terminal/public/scripts/dl-git.py": {
+      "size": 680,
+      "modified": "2026-06-15T23:45:14.677Z",
+      "hash": "727397f2"
+    },
+    "web-terminal/public/scripts/freebuff-launch.ps1": {
+      "size": 979,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "7d22fe9e"
+    },
+    "web-terminal/public/scripts/hidden-workspace.ps1": {
+      "size": 520,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "3e9ef544"
+    },
+    "web-terminal/public/scripts/install-git.ps1": {
+      "size": 1185,
+      "modified": "2026-06-15T23:44:30.941Z",
+      "hash": "6b3e6403"
+    },
+    "web-terminal/public/scripts/ivanti-recon.ps1": {
+      "size": 4117,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "2e8b0e70"
+    },
+    "web-terminal/public/scripts/launch-fb-fixed.ps1": {
+      "size": 1440,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "3d473579"
+    },
+    "web-terminal/public/scripts/launch-fb-schtasks.ps1": {
+      "size": 703,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "30b67eef"
+    },
+    "web-terminal/public/scripts/launch-freebuff-schtasks.ps1": {
+      "size": 1171,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "e61ee62"
+    },
+    "web-terminal/public/scripts/launch-native.ps1": {
+      "size": 427,
+      "modified": "2026-06-16T14:42:50.537Z",
+      "hash": "2cb175ed"
+    },
+    "web-terminal/public/scripts/msbuild-run.xml": {
+      "size": 238,
+      "modified": "2026-06-15T23:40:56.197Z",
+      "hash": "63b5d9d6"
+    },
+    "web-terminal/public/scripts/native-relay.ps1": {
+      "size": 1801,
+      "modified": "2026-06-15T17:39:35.813Z",
+      "hash": "3ab5fac7"
+    },
+    "web-terminal/public/scripts/notepad-cmd.ps1": {
+      "size": 264,
+      "modified": "2026-06-15T17:27:38.224Z",
+      "hash": "7a5e498"
+    },
+    "web-terminal/public/scripts/notes_dl.ps1": {
+      "size": 213,
+      "modified": "2026-06-16T16:05:24.916Z",
+      "hash": "70790eaa"
+    },
+    "web-terminal/public/scripts/open-briefing-notepad.ps1": {
+      "size": 1195,
+      "modified": "2026-06-15T14:32:06.413Z",
+      "hash": "7887023c"
+    },
+    "web-terminal/public/scripts/open-powershell.ps1": {
+      "size": 1161,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "7fb909fd"
+    },
+    "web-terminal/public/scripts/path1-investigate.ps1": {
+      "size": 4057,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "239afb14"
+    },
+    "web-terminal/public/scripts/powershell-sct.sct": {
+      "size": 356,
+      "modified": "2026-06-15T23:18:24.224Z",
+      "hash": "101b0d1b"
+    },
+    "web-terminal/public/scripts/privesc-scan.ps1": {
+      "size": 6512,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "7a1a9cb8"
+    },
+    "web-terminal/public/scripts/quick-window-check.ps1": {
+      "size": 865,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "45d36240"
+    },
+    "web-terminal/public/scripts/reinstall-freebuff.ps1": {
+      "size": 1708,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "5e380bc4"
+    },
+    "web-terminal/public/scripts/send_notes.ps1": {
+      "size": 7885,
+      "modified": "2026-06-16T16:04:57.460Z",
+      "hash": "52621d37"
+    },
+    "web-terminal/public/scripts/sideload-attack.ps1": {
+      "size": 5406,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "13b008e"
+    },
+    "web-terminal/public/scripts/sideload-explore.ps1": {
+      "size": 4418,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "485d2f7d"
+    },
+    "web-terminal/public/scripts/sideload-quick.ps1": {
+      "size": 3250,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "18ab2eb3"
+    },
+    "web-terminal/public/scripts/test-cscript.vbs": {
+      "size": 153,
+      "modified": "2026-06-15T23:18:06.472Z",
+      "hash": "7ee6b36e"
+    },
+    "web-terminal/public/scripts/test-ping.ps1": {
+      "size": 90,
+      "modified": "2026-06-15T14:27:03.708Z",
+      "hash": "13d48cb6"
+    },
+    "web-terminal/public/scripts/vbs-beacon.vbs": {
+      "size": 850,
+      "modified": "2026-06-15T23:23:29.661Z",
+      "hash": "c9e3cce"
+    },
+    "web-terminal/public/test_com.ps1": {
+      "size": 648,
+      "modified": "2026-06-16T16:39:38.113Z",
+      "hash": "1817f92"
+    },
+    "web-terminal/public/test_stagent.ps1": {
+      "size": 2604,
+      "modified": "2026-06-16T16:39:43.769Z",
+      "hash": "4509c91e"
+    },
+    "web-terminal/public/test_stagent2.ps1": {
+      "size": 1920,
+      "modified": "2026-06-16T16:42:25.788Z",
+      "hash": "1783108f"
+    },
+    "web-terminal/public/test_stagent3.ps1": {
+      "size": 2187,
+      "modified": "2026-06-16T16:42:52.353Z",
+      "hash": "5918a28a"
+    },
+    "web-terminal/public/test_stagent4.ps1": {
+      "size": 2535,
+      "modified": "2026-06-16T16:43:11.941Z",
+      "hash": "7c5c9c37"
+    },
+    "web-terminal/public/test_stagent5.ps1": {
+      "size": 1520,
+      "modified": "2026-06-16T16:43:30.658Z",
+      "hash": "37ad7b86"
     },
     "web-terminal/server.js": {
-      "size": 19819,
-      "modified": "2026-06-12T00:02:45.241Z",
-      "hash": "522fa207"
+      "size": 45929,
+      "modified": "2026-06-16T16:39:47.325Z",
+      "hash": "21e07682"
     },
     "yarn.lock": {
       "size": 37561,
-      "modified": "2026-06-11T23:09:11.096Z",
+      "modified": "2026-06-12T17:27:46.549Z",
       "hash": "1f9cf97e"
+    },
+    "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"Write a hello world in javascript\"}]}": {
+      "size": 202,
+      "modified": "2026-06-15T22:42:35.965Z",
+      "hash": "46107349"
     }
   },
   "env": {},
-  "gitStatus": "?? .test_cmd.txt\n?? CAPABILITIES.md\n?? home-server/start-daily.sh\n?? send_command.py\n",
+  "gitStatus": " M .tunnel-url\n M PROGRESS.md\n M web-terminal/server.js\n?? CONTEXT.md\n?? SESSION_SUMMARY.md\n?? web-terminal/.tunnel-url\n?? web-terminal/beacon_persist.py\n?? web-terminal/public/BRIEFING_NATIVE_TERMINAL.md\n?? web-terminal/public/beacon-vbs-connect.txt\n?? web-terminal/public/beacon_persist.py\n?? web-terminal/public/connect-schtasks.hta\n?? web-terminal/public/connect.bat\n?? web-terminal/public/connect.hta\n?? web-terminal/public/connect.vbs\n?? web-terminal/public/craft_store1.ps1\n?? web-terminal/public/craft_store2.ps1\n?? web-terminal/public/grok-report.txt\n?? web-terminal/public/research-notes.md\n?? web-terminal/public/scripts/Whats-Possible.ps1\n?? web-terminal/public/scripts/capability-test.ps1\n?? web-terminal/public/scripts/dl-git.py\n?? web-terminal/public/scripts/install-git.ps1\n?? web-terminal/public/scripts/launch-native.ps1\n?? web-terminal/public/scripts/msbuild-run.xml\n?? web-terminal/public/scripts/native-relay.ps1\n?? web-terminal/public/scripts/notes_dl.ps1\n?? web-terminal/public/scripts/send_notes.ps1\n?? web-terminal/public/test_com.ps1\n?? web-terminal/public/test_stagent.ps1\n?? web-terminal/public/test_stagent2.ps1\n?? web-terminal/public/test_stagent3.ps1\n?? web-terminal/public/test_stagent4.ps1\n?? web-terminal/public/test_stagent5.ps1\n?? \"{\\\"model\\\": \\\"gpt-4o-mini\\\", \\\"messages\\\": [{\\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"Write a hello world in javascript\\\"}]}\"\n",
   "gitBranch": "main",
-  "gitCommit": "5262182d3ffe369cd64b66d5c7a7e84382dc9668"
+  "gitCommit": "53d0b604f3d898b45f6a2fe9f54b40552fad8f3a"
 }
