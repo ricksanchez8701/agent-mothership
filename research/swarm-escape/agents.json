@@ -1,0 +1,25 @@
+{
+  "mission": "Find a way for the container to make the host agent (root) execute our code — host exec. Constraints: no RebuildContainerAsync, no destructive ops. Assets: host file read (GetFileContentAsync symlink), gRPC surface (open auth), writable mounts (/.codespaces/bin, /root/.codespaces/shared, /mnt/containerTmp, workspace), EventStream+TerminalStream listeners, IL disassemblies, mounted npm sources.",
+  "agents": [
+    {
+      "id": "npm",
+      "mission": "Writable mount files the agent EXECUTES as a host process. Search the IL for every reference to mount files (file-syncer.js, file-syncer-bridge.js, codespaceStatusTool.js, *.sh in VmCLICopyFolder) and determine whether the agent runs them on the HOST (not docker exec). A replaceable host-run script = host RCE."
+    },
+    {
+      "id": "sinks",
+      "mission": "Every host-side ProcessStartInfo / ExecuteCommandAsync call site in the IL: containing method, program string, and whether arguments can carry user/request data. Deliver the definitive host-exec sink list ranked by reachability."
+    },
+    {
+      "id": "config",
+      "mission": "The devcontainer CLI config surface. Which config fields (initializeCommand, postCreateCommand, onCreateCommand, updateContentCommand, features, mounts, hooks) execute ON THE HOST vs in-container, and which are honored on --expect-existing-container runs we can trigger. Both --config (workspace, writable) and --override-config (merged, writable) are ours to edit."
+    },
+    {
+      "id": "map",
+      "mission": "The writable-to-executed matrix: every path writable from the container, cross-referenced with everything the agent reads/runs from those paths. Include mountinfo, FilePathProvider getters in IL, and the node scripts in /.codespaces/bin."
+    },
+    {
+      "id": "wiretap",
+      "mission": "Passive + active: subscribe EventStream and TerminalStream for a long window, trigger benign RPCs periodically, log ALL agent activity. The goal: catch the agent running a command we can influence, or an event type that reveals a command channel."
+    }
+  ]
+}

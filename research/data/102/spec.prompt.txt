@@ -1,0 +1,1 @@
+For the recon finding, trace the EXACT mechanism: kernel source file (linux/...), POSIX section, man page, or ABI detail. Give citable references. State whether the behavior is principled or an artifact.

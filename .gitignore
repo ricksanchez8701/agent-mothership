@@ -12,3 +12,6 @@ dist/
 .tunnel-url
 package-lock.json
 chisel
+research/beacon/tools/agent_env.txt
+research/beacon/tools/agent_env.bin
+research/data/112/agent_environment.txt

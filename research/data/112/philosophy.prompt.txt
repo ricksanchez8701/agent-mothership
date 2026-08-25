@@ -1,0 +1,18 @@
+# AGENT: philosophy — topic 112 (the honest boundary)
+
+You are the philosophy agent. Deliverable: data/112/philosophy.md
+
+CONTEXT: We have proven: arbitrary host file read (as root) from the container; the host agent's env/creds; the
+agent's control-plane identity (state 200); the agent's input-queue SAS (read/process only). NOT proven: host code
+execution, host write, queue command injection, or anything touching other users' environments. The container→host
+read primitive is real; the escalation ladder beyond it has not closed.
+
+TASK — the honest verdict:
+1. What is the correct framing of this finding set for disclosure: (a) a single CVE (symlink-escape host read),
+   (b) a credential-disclosure chain (env via /proc/self), (c) both, separately?
+2. Where does the platform boundary actually hold, and is the boundary design sound (least privilege) or accidental?
+3. What is the single most valuable NEXT experiment that would either (a) prove host execution or (b) prove the
+   boundary holds? Design it to be decisive and reversible, scoped to OUR OWN environment.
+4. Rule-based: what is clearly out of scope (other users' environments, control-plane cross-tenant probing) and why
+   the honest report still stands without it.
+Be direct. No hedging for its own sake.

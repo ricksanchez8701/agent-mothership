@@ -1,0 +1,1 @@
+Find a genuine, observable flaw/quirk/inconsistency in linux around the topic "mmap past EOF + truncate → SIGBUS: the kernel kills reads of a mapping it allowed". Write the smallest runnable repro, state the naive expectation it violates, and name exactly what surprised you.

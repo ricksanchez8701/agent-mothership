@@ -1,0 +1,35 @@
+{
+  "goal_file": "goal.md",
+  "agents": [
+    {
+      "id": "recon",
+      "role": "Find the flaw",
+      "produces": "data/{topic}/recon.md",
+      "prompt": "Find a genuine, observable flaw/quirk/inconsistency in {language} around the topic \"{topic}\". Write the smallest runnable repro, state the naive expectation it violates, and name exactly what surprised you."
+    },
+    {
+      "id": "spec",
+      "role": "Trace the mechanism",
+      "produces": "data/{topic}/spec.md",
+      "prompt": "For the recon finding, trace the EXACT mechanism: kernel source file (linux/...), POSIX section, man page, or ABI detail. Give citable references. State whether the behavior is principled or an artifact."
+    },
+    {
+      "id": "history",
+      "role": "Explain the history",
+      "produces": "data/{topic}/history.md",
+      "prompt": "Why did it get this way? Find the design decision, the kernel-version accident, the POSIX/ABI lock-in, or the historical bug. Name kernel versions, dates, and people (Linus, the man pages, commit history) where possible."
+    },
+    {
+      "id": "physics",
+      "role": "Map the principle",
+      "produces": "data/{topic}/physics.md",
+      "prompt": "Does this touch a deeper principle — logic, identity, set theory, numerical analysis, information? Is the behavior mathematically PRINCIPLED or ARBITRARY? Be rigorous, not mystical."
+    },
+    {
+      "id": "philosophy",
+      "role": "Judge the design",
+      "produces": "data/{topic}/philosophy.md",
+      "prompt": "What does this reveal about the language's design philosophy? Is the 'obvious fix' actually philosophically right, or does it create a worse problem? Give the honest verdict."
+    }
+  ]
+}

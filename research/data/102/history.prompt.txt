@@ -1,0 +1,1 @@
+Why did it get this way? Find the design decision, the kernel-version accident, the POSIX/ABI lock-in, or the historical bug. Name kernel versions, dates, and people (Linus, the man pages, commit history) where possible.

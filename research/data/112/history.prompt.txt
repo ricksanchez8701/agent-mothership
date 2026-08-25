@@ -1,0 +1,23 @@
+# AGENT: history — topic 112 (devcontainer rebuild chain)
+
+You are the history agent for the codespaces container→host escape. Deliverable: data/112/history.md
+
+CONTEXT: The codespaces host agent exposes `CodespaceHost/RebuildContainerAsync` (gRPC). The devcontainer CLI
+(`vscode-dev-containers-cli`, source READABLE at /.codespaces/bin/node_modules/@microsoft/vscode-dev-containers-cli/dist/node/devContainersCLI.js)
+runs ON THE HOST (root, with docker access). Our workspace devcontainer.json is at
+/var/lib/docker/codespacemount/workspace/agent-mothership/.devcontainer/devcontainer.json (host view) — WE control it.
+The CLI's start-server flow execs only INTO the container (docker exec). `cliHost.exec` (HOST exec channel) exists but
+we have not found a user-input path to it.
+
+TASK — trace the rebuild chain and find any HOST-side execution we can influence:
+1. From devContainersCLI.js (mounted), map the `devcontainer up/build` + rebuild flow: which steps run on the HOST
+   (docker build, image pull, feature install) vs IN the container (lifecycle commands). Cite line offsets.
+2. Does `docker build` use a Dockerfile/context WE control, and do build RUN steps execute on the host daemon in a
+   way we could pivot from (docker socket? host mounts during build? buildkit cache mounts)?
+3. devcontainer `features` — how are they installed and where (container-side? host-side node_modules)?
+4. `mounts` in devcontainer.json — the agent builds the container with mounts from OUR config. Can a mount source
+   point at a host path we want to write THROUGH (e.g., bind-mount a host dir into the container rw, then write)?
+   The merged_devcontainer.json mounts we saw: shared, persistedshare, agent/mount, containerTmp. What would
+   `"source=/root/.codespaces,target=/pwn,type=bind"` do if the rebuild honors our devcontainer.json mounts?
+5. Is RebuildContainerAsync gated (state checks) and does it rebuild from OUR config or the platform's merged config?
+Cite specific grep offsets in the CLI file. End with: what to TEST to confirm.

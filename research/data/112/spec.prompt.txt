@@ -1,0 +1,18 @@
+# AGENT: spec — topic 112 (fuse driver attack surface)
+
+You are the spec agent for the codespaces container→host escape. Deliverable: data/112/spec.md
+
+CONTEXT: The workspace we write to is fuse-backed. Host-side fuse daemon:
+`/.codespaces/agent/bin/storage-driver-rs/codespaces-fuse-driver` (also storage-driver-rs-abi-7-19),
+running as root on the HOST, backing `/mnt/data/fuse-writes.img` (fuse-writes.img.daemon-status.json showed pid 6247, bootId 877ca5e0…). Container sees `/workspaces` (fuse) and `/tmp` (bind of host /mnt/containerTmp).
+
+TASK — trace this surface:
+1. From the IL + any readable source, find how the fuse driver is launched (args, mount opts), what it backs, and what file operations the container can trigger on it (read/write/create/rename/unlink/ioctl/xattr).
+2. Identify the driver's language (Rust? Go? the `codespaces-fuse-driver` binary), version, and any known CVE surface for similar fuse drivers (e.g., FUSE symlink/hardlink handling, TOCTOU on path resolution, xattr handlers, write-back cache, O_DIRECT).
+3. Concrete attack shapes to test from the container:
+   - symlink/hardlink inside the fuse mount pointing outside it — do fuse-path checks re-resolve?
+   - special files (fifo, device nodes) created in the workspace — how does the fuse daemon handle them?
+   - huge/sparse file writes, truncate races (we already proved SIGBUS kill via mmap+truncate in 102)
+   - xattr ops, chmod/chown (we proved chown symlink transparency in 107)
+4. Give the TOP 3 testable primitives against the fuse daemon, with expected observable outcomes.
+Use /tmp/codespaces.il (grep 'fuse|storage-driver|FuseDaemon|mount_data_disk'), the mounted binaries, and web research.

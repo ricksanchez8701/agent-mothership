@@ -1,0 +1,1 @@
+Why did it get this way? Find the design decision, the 1997 accident, the TC39 proposal, or the back-compat lock-in. Name dates and people where possible.

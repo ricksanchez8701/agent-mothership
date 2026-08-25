@@ -1,0 +1,50 @@
+{
+  "language": "linux",
+  "topics": [
+    {
+      "id": "101",
+      "topic": "select() reports closed fds as READY — the lossy-bitmap lie",
+      "status": "complete"
+    },
+    {
+      "id": "102",
+      "topic": "mmap past EOF + truncate → SIGBUS kill primitive (nobody→root)",
+      "status": "complete"
+    },
+    {
+      "id": "103",
+      "topic": "setpriority(21) returns success and silently clamps to 19 — out-of-contract input accepted",
+      "status": "queued"
+    },
+    {
+      "id": "104",
+      "topic": "pwrite + O_APPEND ignores the offset argument; O_APPEND is not a security boundary",
+      "status": "queued"
+    },
+    {
+      "id": "105",
+      "topic": "MADV_FREE is lazy-free: RSS unchanged, secrets retained — the 'free' lie",
+      "status": "queued"
+    },
+    {
+      "id": "106",
+      "topic": "copy_file_range across filesystems → EXDEV: the copy that can't copy",
+      "status": "queued"
+    },
+    {
+      "id": "107",
+      "topic": "chmod/chown symlink transparency: ownership-transfer door (nobody→root)",
+      "status": "complete"
+    },
+    {
+      "id": "108",
+      "topic": "errno lies + seccomp errno fingerprint (EPERM/ENOSYS/EINVAL tell the profile)",
+      "status": "queued"
+    },
+    {
+      "id": "112",
+      "topic": "agent hijack: container -> host escape via worker (env/creds/control-plane)",
+      "status": "in-progress"
+    }
+  ]
+}

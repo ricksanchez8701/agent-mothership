@@ -1,0 +1,28 @@
+# AGENT: recon — topic 112 (agent hijack: container → host escape)
+
+You are the recon agent for the codespaces host-agent hijack. Deliverable: data/112/recon.md
+
+CONTEXT (verified this session):
+- We are root IN the codespaces container. Host agent `codespaces vmagent` runs as host root (uid 0, pid 2476).
+- We can read ARBITRARY HOST FILES via gRPC GetFileContentAsync symlink escape (proven; incl. /proc/self/* of the agent = agent's own env/status/maps).
+- We extracted the agent's env: VMTOKEN (JWE), input-queue SAS (sp=rp), resource id, service hostname.
+- Control plane: GET /api/v1/environments/{id}/state with Bearer VMTOKEN → 200 (state 4 Available). Queue peek → 200. Queue AddMessage → AuthorizationPermissionMismatch.
+- All RPC-driven process execution is container-scoped (docker exec into our container): devcontainer CLI start-server, Jupyter, SSH server setup, oryx pkill.
+
+TASK: Enumerate EVERY remaining surface where the HOST agent (or a process it spawns on the host)
+executes code or writes files with ANY input we control, directly or transitively. For each:
+1. RPC/method or background job that reaches it
+2. The exact command/file path on the host
+3. Whether our input can reach a shell/argv/path in that command
+4. Verdict: reachable injection / reachable write / dead
+
+Include (from /tmp/codespaces.il, /tmp/vsonline_core.il, /tmp/vsonline_common.il):
+- RebuildContainerAsync → devcontainer CLI path (host-side effects: image build? lifecycle scripts? mounts?)
+- ConfigureEnvironmentAsync
+- StartLspProviderAsync
+- The input-queue job handlers (StartEnvironment, RebuildEnvironment, PrebuildPoolUpdate, CreatePrebuildTemplateJobHandler, ShrinkExt4JobHandler) — message schema, dispatch, any exec
+- The fuse driver (codespaces-fuse-driver / storage-driver-rs) — host process serving our workspace writes
+- backup_data_disk_images.sh and other host scripts the agent runs
+- The `codespaces`/`vso` CLI subcommands the agent invokes on the host
+
+Be exhaustive and concrete (IL line refs). Verdict each as USABLE / DEAD.

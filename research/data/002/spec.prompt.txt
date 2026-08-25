@@ -1,0 +1,1 @@
+For the recon finding, trace the EXACT mechanism: ECMAScript section / IEEE 754 rule / engine behavior. Give citable references. State whether the behavior is principled or an artifact.
