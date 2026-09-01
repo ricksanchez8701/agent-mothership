@@ -50,16 +50,25 @@ Everything is software-rendered and streamed, so it looks right but is laggy
 
 ## Usage
 
-1. Open a terminal in the codespace (you should be the `codespace` user).
-2. Run:
+**One command, every login:**
 
-   ```bash
-   omarchy-desktop
-   ```
+```bash
+omarchy-up
+```
 
-3. In VS Code: **Ports** tab → port **6080** → open in browser (it opens
-   `/vnc.html`; if you land on a blank page, add `/vnc.html`).
-4. **Click inside the viewer to grab keyboard/mouse input**, then:
+It starts the whole pipeline (if not already running), waits until the viewer
+answers, and prints a copy-paste browser URL like
+`https://<codespace-name>-6080.app.github.dev/vnc.html`. Idempotent — safe to
+re-run whenever you log in. Install/update it from the repo with:
+
+```bash
+sudo cp .devcontainer/desktop/omarchy-up /usr/local/bin/omarchy-up && sudo chmod +x /usr/local/bin/omarchy-up
+```
+
+Manual alternative: run `omarchy-desktop` in a terminal, then open port **6080**
+in the VS Code Ports tab (`/vnc.html`; add the path if you land on a blank page).
+
+**Click inside the viewer to grab keyboard/mouse input**, then:
 
    | Shortcut                        | Action                    |
    |---------------------------------|---------------------------|
@@ -109,6 +118,7 @@ export SWAYSOCK=/tmp/xdg-omarchy/sway-ipc.1000.22278.sock   # or: swaymsg -t get
 | Path | What it is |
 |---|---|
 | `.devcontainer/desktop/omarchy-desktop` | Source script; installs to `/usr/local/bin/omarchy-desktop` |
+| `.devcontainer/desktop/omarchy-up` | One-shot launcher; installs to `/usr/local/bin/omarchy-up` |
 | `~/.config/sway/omarchy-headless.conf` | Generated Sway config (bindings + `exec_always` Quickshell) |
 | `~/.local/state/omarchy/current/theme/` | Tokyo Night files: `colors.toml`, `shell.toml`, `backgrounds/0-winding-road.jpg` |
 | `/tmp/omarchy-quickshell.log` | Omarchy shell (Quickshell) stdout/stderr |

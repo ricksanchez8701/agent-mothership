@@ -1,0 +1,57 @@
+#!/bin/bash
+# omarchy-up — one-shot: bring up the Omarchy desktop pipeline and show the
+# browser URL. Idempotent: safe to re-run on every login.
+#
+# Usage (inside the codespace, as the codespace user):
+#   omarchy-up
+#
+# Prints the noVNC URL. Open it in your browser to see the desktop.
+
+set -e
+
+PORT=6080
+
+# --- 1. Bring up the pipeline if it isn't already running -------------------
+if ! pgrep -f "websockify --web /opt/noVNC" >/dev/null 2>&1; then
+  echo "Starting Omarchy desktop pipeline..."
+  nohup omarchy-desktop >/tmp/omarchy-up.log 2>&1 &
+  echo "  (boot log: /tmp/omarchy-up.log)"
+fi
+
+# --- 2. Wait until the web viewer answers ------------------------------------
+echo -n "Waiting for viewer on :$PORT"
+for i in $(seq 1 60); do
+  if curl -sf -o /dev/null "http://localhost:$PORT/vnc.html"; then
+    echo " ... up after ~${i}s"
+    break
+  fi
+  if [ "$i" = "60" ]; then
+    echo
+    echo "ERROR: viewer never came up. Check:"
+    echo "  /tmp/omarchy-up.log /tmp/sway.out /tmp/omarchy-quickshell.log /tmp/wayvnc.log /tmp/websockify.log"
+    exit 1
+  fi
+  sleep 1
+done
+
+# --- 3. Build the browser URL ------------------------------------------------
+if [ -n "${CODESPACE_NAME}" ]; then
+  URL="https://${CODESPACE_NAME}-${PORT}.app.github.dev/vnc.html"
+elif [ -n "${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}" ]; then
+  HOSTNAME="$(hostname | sed 's/\..*//')"
+  URL="https://${HOSTNAME}-${PORT}.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/vnc.html"
+else
+  URL="http://localhost:${PORT}/vnc.html"
+fi
+
+# --- 4. Show the "Open in browser" line (copy-paste / Ctrl+click) ------------
+cat <<EOF
+
+============================================================
+  Omarchy desktop is running.
+  Open in your browser:
+      $URL
+  (Ports tab -> port $PORT also works.)
+  Tip: Ctrl+Alt+Space opens the app menu; Ctrl+Alt+Enter opens foot.
+============================================================
+EOF
