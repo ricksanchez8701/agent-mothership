@@ -42,6 +42,19 @@ RUN rm -f /usr/share/pacman/keyrings/omarchy.gpg /usr/share/pacman/keyrings/omar
  && pacman -Scc --noconfirm \
  && rm -f /tmp/omarchy-base.packages
 
+# --- Headless desktop mode (Hyprland + wayvnc + noVNC in the browser) -----
+# Optional: run `omarchy-desktop` and open port 6080/vnc.html to view a
+# software-rendered Hyprland session. Laggy by nature (no GPU) — a demo, not
+# a daily driver.
+RUN pacman -S --noconfirm --needed wayvnc xorg-xwayland python-pip \
+ && python -m venv /opt/venv \
+ && /opt/venv/bin/pip install --no-cache-dir websockify \
+ && curl -sSL https://github.com/novnc/noVNC/archive/refs/tags/v1.5.0.tar.gz | tar -xz -C /opt \
+ && mv /opt/noVNC-1.5.0 /opt/noVNC
+
+COPY desktop/omarchy-desktop /usr/local/bin/omarchy-desktop
+RUN chmod +x /usr/local/bin/omarchy-desktop
+
 # --- User + environment ----------------------------------------------------
 ENV LANG=en_US.UTF-8
 ARG USERNAME=codespace

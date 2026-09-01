@@ -1,0 +1,75 @@
+#!/bin/bash
+# Omarchy desktop mode (headless) — Hyprland + wayvnc + noVNC, viewed in the browser.
+#
+# Usage (inside the codespace, as the codespace user):
+#   omarchy-desktop
+#
+# Then open the forwarded port 6080 -> vnc.html in your browser.
+#
+# Notes:
+#   * Software-rendered (llvmpipe) — no GPU here. Expect it to be laggy.
+#   * Hyprland refuses to run as root; run this as the codespace user.
+#   * Logs: /tmp/hyprland.log, /tmp/wayvnc.log, /tmp/websockify.log
+
+set -e
+
+if [ "$(id -u)" = "0" ]; then
+  echo "ERROR: Hyprland refuses to run as root. Run this as the 'codespace' user (you should already be)." >&2
+  exit 1
+fi
+
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/tmp/xdg-omarchy}"
+mkdir -p "$XDG_RUNTIME_DIR" && chmod 700 "$XDG_RUNTIME_DIR"
+export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-1}"
+export WLR_BACKENDS=headless
+export WLR_RENDERER_ALLOW_SOFTWARE=1
+export WLR_NO_HARDWARE_CURSORS=1
+export HYPRLAND_LOG_FILE=/tmp/hyprland.log
+export HYPRLAND_INSTANCE_SIGNATURE="desktop"
+
+# --- 1. Start Hyprland headless -------------------------------------------
+if ! hyprctl instances >/dev/null 2>&1; then
+  echo "Starting Hyprland (headless, software rendering)..."
+  hyprland >/tmp/hyprland.out 2>&1 &
+fi
+
+# Wait for the Hyprland IPC socket (up to 60s)
+for _ in $(seq 1 60); do
+  hyprctl instances >/dev/null 2>&1 && break
+  sleep 1
+done
+if ! hyprctl instances >/dev/null 2>&1; then
+  echo "ERROR: Hyprland did not come up. See /tmp/hyprland.log" >&2
+  exit 1
+fi
+echo "Hyprland is up."
+
+# --- 2. Create a virtual monitor -------------------------------------------
+hyprctl output create headless >/dev/null 2>&1 || true
+sleep 2
+hyprctl keyword monitor HEADLESS-1,1920x1080@60,0x0,1 >/dev/null 2>&1 || true
+hyprctl keyword monitor HEADLESS-2,1920x1080@60,0x0,1 >/dev/null 2>&1 || true
+
+# --- 3. Start wayvnc (VNC server on :5900) ---------------------------------
+if ! pgrep -f "wayvnc" >/dev/null 2>&1; then
+  echo "Starting wayvnc on :5900..."
+  wayvnc 0.0.0.0 5900 >/tmp/wayvnc.log 2>&1 &
+fi
+
+# --- 4. Start noVNC (web viewer on :6080) ----------------------------------
+if ! pgrep -f "websockify" >/dev/null 2>&1; then
+  echo "Starting noVNC on :6080..."
+  /opt/venv/bin/websockify --web /opt/noVNC 6080 localhost:5900 >/tmp/websockify.log 2>&1 &
+fi
+
+echo
+echo "============================================================"
+echo "  Omarchy desktop ready!"
+echo "  Open the forwarded port 6080 in your browser and go to:"
+echo "      /vnc.html"
+echo "  (Codespaces: Ports tab -> port 6080 -> open in browser)"
+echo "  Logs: /tmp/hyprland.log /tmp/wayvnc.log /tmp/websockify.log"
+echo "============================================================"
+echo
+echo "Ctrl+C stops this foreground watcher (desktop keeps running)."
+wait

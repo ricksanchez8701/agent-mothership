@@ -19,5 +19,6 @@
       }
     }
   },
+  "forwardPorts": [6080],
   "postCreateCommand": "sudo pacman -Syu --noconfirm"
 }
