@@ -7,48 +7,130 @@
 # Then open the forwarded port 6080 -> vnc.html in your browser.
 #
 # Notes:
-#   * Software-rendered (llvmpipe) — no GPU here. Expect it to be laggy.
-#   * Hyprland refuses to run as root; run this as the codespace user.
-#   * Logs: /tmp/hyprland.log, /tmp/wayvnc.log, /tmp/websockify.log
+#   * Software-rendered (llvmpipe/pixman) — no GPU here. Expect it to be laggy.
+#   * Compositors refuse to run as root; run this as the codespace user.
+#   * Hyprland 0.56+ (Aquamarine) requires a DRM render node (/dev/dri/renderD*)
+#     for its GBM allocator. This container blocks DRM access, so we fall back
+#     to a headless Sway session (wlroots + pixman), which needs no GPU.
+#   * Logs: /tmp/hyprland.log, /tmp/sway.out, /tmp/wayvnc.log, /tmp/websockify.log
 
 set -e
 
 if [ "$(id -u)" = "0" ]; then
-  echo "ERROR: Hyprland refuses to run as root. Run this as the 'codespace' user (you should already be)." >&2
+  echo "ERROR: compositors refuse to run as root. Run this as the 'codespace' user (you should already be)." >&2
   exit 1
 fi
 
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/tmp/xdg-omarchy}"
 mkdir -p "$XDG_RUNTIME_DIR" && chmod 700 "$XDG_RUNTIME_DIR"
 export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-1}"
-export WLR_BACKENDS=headless
 export WLR_RENDERER_ALLOW_SOFTWARE=1
 export WLR_NO_HARDWARE_CURSORS=1
 export HYPRLAND_LOG_FILE=/tmp/hyprland.log
 export HYPRLAND_INSTANCE_SIGNATURE="desktop"
 
-# --- 1. Start Hyprland headless -------------------------------------------
-if ! hyprctl instances >/dev/null 2>&1; then
-  echo "Starting Hyprland (headless, software rendering)..."
-  hyprland >/tmp/hyprland.out 2>&1 &
-fi
+HPR_SOCK="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket.sock"
+SWAY_SOCK="$XDG_RUNTIME_DIR/wayland-1"
 
-# Wait for the Hyprland IPC socket (up to 60s)
-for _ in $(seq 1 60); do
-  hyprctl instances >/dev/null 2>&1 && break
+# --- 0. Optional: start seatd (needed by Hyprland/Aquamarine when DRM exists) --
+if [ -x /usr/sbin/seatd ] && [ ! -S /run/seatd.sock ]; then
+  sudo seatd -g "$(id -gn)" >/tmp/seatd.log 2>&1 &
   sleep 1
-done
-if ! hyprctl instances >/dev/null 2>&1; then
-  echo "ERROR: Hyprland did not come up. See /tmp/hyprland.log" >&2
-  exit 1
+  if [ -S /run/seatd.sock ]; then
+    export LIBSEAT_BACKEND=seatd SEATD_SOCK=/run/seatd.sock
+    echo "Started seatd ($SEATD_SOCK)."
+  fi
 fi
-echo "Hyprland is up."
 
-# --- 2. Create a virtual monitor -------------------------------------------
-hyprctl output create headless >/dev/null 2>&1 || true
-sleep 2
-hyprctl keyword monitor HEADLESS-1,1920x1080@60,0x0,1 >/dev/null 2>&1 || true
-hyprctl keyword monitor HEADLESS-2,1920x1080@60,0x0,1 >/dev/null 2>&1 || true
+# --- 0.5. Ensure an Omarchy theme is set BEFORE the shell starts -------------
+# Quickshell reads theme/colors.toml at startup; if none exists it renders the
+# stock fallback palette. Applying first means a fresh shell boots themed
+# instead of needing an applyTheme IPC after the fact.
+if [ -x /usr/bin/omarchy ] && [ "$(omarchy theme current 2>/dev/null)" = "Unknown" ]; then
+  echo "No Omarchy theme set; applying Tokyo Night."
+  OMARCHY_THEME_HEADLESS=1 omarchy theme set "Tokyo Night" >/dev/null 2>&1 \
+    || echo "WARNING: could not apply theme; run 'omarchy theme set \"Tokyo Night\"' manually." >&2
+fi
+
+COMPOSITOR=""
+
+# --- 1. Try Hyprland first ------------------------------------------------
+if ! hyprctl instances >/dev/null 2>&1 || [ ! -S "$HPR_SOCK" ]; then
+  if command -v hyprland >/dev/null 2>&1; then
+    echo "Starting Hyprland (headless, software rendering)..."
+    env WLR_BACKENDS=headless \
+        WLR_RENDERER_ALLOW_SOFTWARE=1 \
+        WLR_NO_HARDWARE_CURSORS=1 \
+        LIBSEAT_BACKEND="${LIBSEAT_BACKEND:-seatd}" \
+        SEATD_SOCK=/run/seatd.sock \
+        hyprland >/tmp/hyprland.out 2>&1 &
+
+    # Wait for a REAL Hyprland IPC socket (hyprctl still exits 0 when no
+    # instance is running, so test the socket file instead of the exit code).
+    for _ in $(seq 1 20); do
+      [ -S "$HPR_SOCK" ] && break
+      sleep 1
+    done
+  fi
+fi
+
+if [ -S "$HPR_SOCK" ]; then
+  COMPOSITOR="hyprland"
+  echo "Hyprland is up."
+
+  # --- 2a. Create virtual monitors ------------------------------------------
+  hyprctl output create headless >/dev/null 2>&1 || true
+  sleep 2
+  hyprctl keyword monitor HEADLESS-1,1920x1080@60,0x0,1 >/dev/null 2>&1 || true
+  hyprctl keyword monitor HEADLESS-2,1920x1080@60,0x0,1 >/dev/null 2>&1 || true
+fi
+
+# --- 2b. Fallback: headless Sway (works without any DRM render node) --------
+if [ -z "$COMPOSITOR" ]; then
+  pkill -f "hyprland" 2>/dev/null || true
+  echo "Hyprland did not come up (no DRM render node in this container); using headless Sway instead."
+  mkdir -p "$HOME/.config/sway"
+
+  cat > "$HOME/.config/sway/omarchy-headless.conf" <<'EOF'
+set $mod Mod4
+font pango: Noto Sans 10
+input type:touchpad { tap enabled }
+client.focused_inactive #3f51b5 #3f51b5 #ffffff #6272a4
+client.focused #5865f2 #5865f2 #ffffff #6272a4
+default_border pixel 2
+gaps inner 6
+bindsym $mod+Return exec foot
+bindsym $mod+space exec omarchy-shell shell toggle omarchy.menu '{"menu":"root"}'
+bindsym $mod+d exec omarchy-shell shell toggle omarchy.menu '{"menu":"root","maxDepth":1}'
+bindsym Control+Alt+space exec omarchy-shell shell toggle omarchy.menu '{"menu":"root"}'
+bindsym Control+Alt+Return exec foot
+bindsym $mod+Shift+Escape exec swaymsg exit
+
+# Omarchy desktop = Quickshell (compositor-agnostic, wlr layer-shell).
+# Hosts the bar, panels, overlays. Works on Sway without Hyprland.
+exec_always env QS_DISABLE_FILE_WATCHER=1 QS_NO_RELOAD_POPUP=1 \
+  OMARCHY_PATH=/usr/share/omarchy \
+  quickshell -n -p /usr/share/omarchy/shell >/tmp/omarchy-quickshell.log 2>&1
+EOF
+
+  env WLR_BACKENDS=headless \
+      WLR_RENDERER=pixman \
+      WLR_NO_HARDWARE_CURSORS=1 \
+      sway -c "$HOME/.config/sway/omarchy-headless.conf" >/tmp/sway.out 2>&1 &
+
+  for _ in $(seq 1 20); do
+    [ -S "$SWAY_SOCK" ] && break
+    sleep 1
+  done
+
+  if [ -S "$SWAY_SOCK" ]; then
+    COMPOSITOR="sway"
+    echo "Sway is up (fallback compositor)."
+  else
+    echo "ERROR: no compositor came up. See /tmp/hyprland.log, /tmp/sway.out" >&2
+    exit 1
+  fi
+fi
 
 # --- 3. Start wayvnc (VNC server on :5900) ---------------------------------
 if ! pgrep -f "wayvnc" >/dev/null 2>&1; then
@@ -64,11 +146,11 @@ fi
 
 echo
 echo "============================================================"
-echo "  Omarchy desktop ready!"
+echo "  Omarchy desktop ready! (compositor: $COMPOSITOR)"
 echo "  Open the forwarded port 6080 in your browser and go to:"
 echo "      /vnc.html"
 echo "  (Codespaces: Ports tab -> port 6080 -> open in browser)"
-echo "  Logs: /tmp/hyprland.log /tmp/wayvnc.log /tmp/websockify.log"
+echo "  Logs: /tmp/$COMPOSITOR.out /tmp/wayvnc.log /tmp/websockify.log"
 echo "============================================================"
 echo
 echo "Ctrl+C stops this foreground watcher (desktop keeps running)."
